@@ -45,21 +45,16 @@ public class MainActivity extends AppCompatActivity {
 
     private void bookSearch() {
         String queryString = editText.getText().toString();
-        if(isInternetOn() == false) {
+        if(!isInternetOn()) {
             Toast.makeText(this, "Not connected to the internet", Toast.LENGTH_LONG).show();
+            return;
         }
         new FetchBook(this, values, itemAdapter, recyclerView).execute(queryString);
-
-//        if (networkInfo != null && networkInfo.isConnected()) {
-//            new FetchBook(this, values, itemAdapter, recyclerView).execute(queryString);
-//        } else {
-//
-//        }
     }
 
     private boolean isInternetOn() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        return networkInfo != null && networkInfo.isConnectedOrConnecting();
+        return networkInfo != null && networkInfo.isConnected();
     }
 }
